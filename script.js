@@ -137,3 +137,37 @@
     }, 260);
   });
 })();
+
+// Click a gauge to see what the metric means
+(function () {
+  var dlg = document.getElementById('metric-dialog');
+  if (!dlg || typeof dlg.showModal !== 'function') return;
+  var DATA = {"ctr": {"title": "What is CTR?", "lead": "Click-through rate shows how many people clicked your ad after seeing it. It tells you whether your ad is interesting enough to get attention.", "formula": "CTR = (Clicks ÷ Impressions) × 100", "example": "An ad is shown 1,000 times and gets 20 clicks. CTR = 20 ÷ 1,000 × 100 = 2%.", "tips": ["Open with a strong hook in the first line or the first second.", "Show the product or result clearly, and design for a phone screen.", "Test new images, videos and headlines, one change at a time.", "Check that the ad reaches the right audience."], "guide": true}, "cpl": {"title": "What is Cost per Lead?", "lead": "Cost per lead is what you pay, on average, to get one enquiry, such as a form fill, a message or a call. A lower cost per lead means you get enquiries more cheaply.", "formula": "CPL = Total ad spend ÷ Number of leads", "example": "You spend 100 and get 20 leads. CPL = 100 ÷ 20 = 5 per lead.", "tips": ["Make the offer clear so the right people respond.", "Keep the form short and the landing page fast.", "Improve the audience and turn off what does not perform.", "Compare CPL with what a customer is worth to you, not with other businesses."], "guide": true}, "roas": {"title": "What is ROAS?", "lead": "Return on ad spend shows how much revenue you earn for every 1 you spend on ads. A ROAS of 2.8x means every 1 spent brought back 2.8 in revenue.", "formula": "ROAS = Revenue from ads ÷ Ad spend", "example": "You spend 100 on ads and make 280 in sales, so ROAS = 280 ÷ 100 = 2.8x. Revenue is not profit: break-even ROAS = 1 ÷ your profit margin.", "tips": ["Send traffic to a clear landing page with a strong offer.", "Put more budget into the ads and audiences that already sell.", "Improve the creative and the offer, not only the targeting.", "Track sales properly so you know which ads bring revenue."], "guide": true}, "cr": {"title": "What is Conversion Rate?", "lead": "Conversion rate is the share of visitors who take the action you want, such as buying, sending a message or filling in a form.", "formula": "Conversion rate = (Conversions ÷ Visitors) × 100", "example": "500 people visit your page and 25 buy or send an enquiry. Conversion rate = 25 ÷ 500 × 100 = 5%.", "tips": ["Give each page one clear goal and one clear button.", "Make the page fast and easy to use on a phone.", "Add trust: reviews, real photos and clear contact details.", "Keep forms and checkout as short as possible."], "guide": false}};
+  var $ = function (id) { return document.getElementById(id); };
+
+  function openMetric(g) {
+    var d = DATA[g.getAttribute('data-metric')];
+    if (!d) return;
+    var v = g.querySelector('.val');
+    var dec = parseInt(v.getAttribute('data-decimals') || '0', 10);
+    $('md-badge').textContent = (v.getAttribute('data-prefix') || '') + Number(v.getAttribute('data-count')).toFixed(dec) + (v.getAttribute('data-suffix') || '');
+    $('md-title').textContent = d.title;
+    $('md-lead').textContent = d.lead;
+    $('md-formula').textContent = d.formula;
+    $('md-example').textContent = d.example;
+    var ul = $('md-tips'); ul.textContent = '';
+    d.tips.forEach(function (t) { var li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
+    $('md-guide').style.display = d.guide ? '' : 'none';
+    dlg.showModal();
+    dlg.querySelector('.md-card').scrollTop = 0;
+  }
+
+  document.querySelectorAll('.gauge[data-metric]').forEach(function (g) {
+    g.addEventListener('click', function () { openMetric(g); });
+    g.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openMetric(g); }
+    });
+  });
+  dlg.querySelector('.md-close').addEventListener('click', function () { dlg.close(); });
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+})();

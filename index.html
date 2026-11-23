@@ -73,7 +73,7 @@
     </div>
     <div class="hero-stats" aria-label="Campaign results">
       <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--a)"/><stop offset=".55" style="stop-color:var(--b)"/><stop offset="1" style="stop-color:var(--c)"/></linearGradient></defs></svg>
-      <div class="gauge" style="--p:.72">
+      <div class="gauge" data-metric="ctr" role="button" tabindex="0" aria-haspopup="dialog" aria-label="CTR: tap to learn what it means" title="Tap to learn more" style="--p:.72"><span class="gi" aria-hidden="true">i</span>
         <div class="dial">
           <svg viewBox="0 0 100 100" aria-hidden="true">
             <circle class="track" cx="50" cy="50" r="40"/>
@@ -84,7 +84,7 @@
         </div>
         <p>CTR</p>
       </div>
-      <div class="gauge" style="--p:.58">
+      <div class="gauge" data-metric="cpl" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Cost per Lead: tap to learn what it means" title="Tap to learn more" style="--p:.58"><span class="gi" aria-hidden="true">i</span>
         <div class="dial">
           <svg viewBox="0 0 100 100" aria-hidden="true">
             <circle class="track" cx="50" cy="50" r="40"/>
@@ -95,7 +95,7 @@
         </div>
         <p>Cost per Lead</p>
       </div>
-      <div class="gauge" style="--p:.80">
+      <div class="gauge" data-metric="roas" role="button" tabindex="0" aria-haspopup="dialog" aria-label="ROAS: tap to learn what it means" title="Tap to learn more" style="--p:.80"><span class="gi" aria-hidden="true">i</span>
         <div class="dial">
           <svg viewBox="0 0 100 100" aria-hidden="true">
             <circle class="track" cx="50" cy="50" r="40"/>
@@ -106,7 +106,7 @@
         </div>
         <p>ROAS</p>
       </div>
-      <div class="gauge" style="--p:.88">
+      <div class="gauge" data-metric="cr" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Conversion Rate: tap to learn what it means" title="Tap to learn more" style="--p:.88"><span class="gi" aria-hidden="true">i</span>
         <div class="dial">
           <svg viewBox="0 0 100 100" aria-hidden="true">
             <circle class="track" cx="50" cy="50" r="40"/>
@@ -158,6 +158,24 @@
     </div>
   </section>
 </main>
+<dialog id="metric-dialog" class="mdlg" aria-labelledby="md-title">
+  <div class="md-card">
+    <button class="md-close" type="button" aria-label="Close">&times;</button>
+    <div class="md-head"><span class="md-badge" id="md-badge"></span><h2 id="md-title"></h2></div>
+    <p class="md-lead" id="md-lead"></p>
+    <div class="md-grid">
+      <div><h3>Formula</h3><p class="md-formula" id="md-formula"></p></div>
+      <div><h3>Example</h3><p id="md-example"></p></div>
+    </div>
+    <h3>How to improve it</h3>
+    <ul id="md-tips"></ul>
+    <div class="md-actions">
+      <a class="btn line" id="md-guide" href="blog-meta-ads-metrics.html">Read the full guide</a>
+      <a class="btn fill" href="contact.html">Get help with this</a>
+    </div>
+  </div>
+</dialog>
+
 <footer>
   <div class="wrap">
     <span>© 2026 Zubaer</span>

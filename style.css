@@ -320,3 +320,33 @@ body::before{background:linear-gradient(180deg,rgba(11,11,20,.12),rgba(11,11,20,
 .tip-btn svg{width:18px;height:18px;transition:rotate .5s cubic-bezier(.3,1.4,.5,1)}
 .tip-btn.spin svg{rotate:360deg}
 @media (max-width:760px){.tip-card{flex-direction:column;align-items:flex-start;padding:22px}.tip-btn{align-self:stretch;justify-content:center}}
+
+/* ===== Clickable gauges and explanation popup ===== */
+.gauge{position:relative;cursor:pointer}
+.gauge:focus-visible{outline:2px solid var(--b);outline-offset:3px}
+.gi{position:absolute;top:10px;right:10px;width:20px;height:20px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;font-size:12px;font-weight:700;font-style:italic;font-family:Georgia,serif;color:var(--mute);transition:background .2s,color .2s,border-color .2s}
+.gauge:hover .gi,.gauge:focus-visible .gi{background:var(--g);color:#fff;border-color:transparent}
+.mdlg{width:min(640px,calc(100vw - 28px));max-width:none;max-height:none;padding:0;border:0;background:transparent;color:var(--ink);overflow:visible}
+.mdlg::backdrop{background:rgba(5,5,12,.72);backdrop-filter:blur(6px)}
+.md-card{position:relative;max-height:calc(100vh - 40px);overflow:auto;padding:30px;border:1px solid var(--line);border-radius:28px;background:color-mix(in srgb,var(--bg) 94%,#000);box-shadow:0 30px 90px -30px var(--a)}
+.mdlg[open] .md-card{animation:mdin .35s cubic-bezier(.2,.8,.2,1) both}
+@keyframes mdin{from{opacity:0;translate:0 18px;scale:.98}}
+.md-close{position:absolute;top:16px;right:16px;width:40px;height:40px;border:1px solid var(--line);border-radius:50%;background:var(--surface);color:var(--ink);font-size:24px;line-height:1;cursor:pointer;transition:border-color .2s}
+.md-close:hover{border-color:var(--b)}
+.md-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-right:46px}
+.md-card h2{font-size:clamp(26px,4vw,34px)}
+.md-card h2::after{display:none}
+.md-badge{padding:7px 16px;border-radius:999px;background:var(--g);color:#fff;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:18px}
+.md-lead{margin:18px 0 22px;font-size:17px;line-height:1.65;color:color-mix(in srgb,var(--ink) 85%,transparent)}
+.md-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}
+.md-grid>div{padding:16px 18px;border:1px solid var(--line);border-radius:18px;background:var(--surface)}
+.md-card h3{margin-bottom:8px;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);font-family:'DM Sans',sans-serif;font-weight:500}
+.md-grid p{font-size:15px;line-height:1.55;color:color-mix(in srgb,var(--ink) 88%,transparent)}
+.md-formula{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;color:var(--ink)!important}
+.md-card ul{margin:0 0 24px;padding-left:1.2em}
+.md-card li{margin-bottom:8px;font-size:15.5px;line-height:1.55;color:color-mix(in srgb,var(--ink) 85%,transparent)}
+.md-actions{display:flex;gap:12px;flex-wrap:wrap}
+html:has(dialog[open]){overflow:hidden}
+@media (max-width:560px){.md-card{padding:24px 20px}.md-grid{grid-template-columns:1fr}.md-actions .btn{flex:1;text-align:center}}
+@media (prefers-reduced-motion:reduce){.mdlg[open] .md-card{animation:none}}
+.mdlg{margin:auto}
