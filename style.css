@@ -2,7 +2,7 @@
   --bg:#F7F6FB;--ink:#14122B;--mute:#6A6884;--line:#E3E0F0;--surface:#FFFFFF;
   --a:#6D4AFF;--b:#2F7BFF;--c:#18C8E0;
   --g:linear-gradient(120deg,var(--a),var(--b) 55%,var(--c));
-  --glow1:rgba(109,74,255,.22);--glow2:rgba(24,200,224,.18);
+  --glow1:rgba(109,74,255,.22);--glow2:rgba(24,200,224,.18); 
 }
 @media (prefers-color-scheme:dark){:root{
   --bg:#0B0B14;--ink:#F3F2FA;--mute:#9C9AB4;--line:#262540;--surface:#14132A;
