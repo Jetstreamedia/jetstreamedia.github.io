@@ -171,3 +171,52 @@
   dlg.querySelector('.md-close').addEventListener('click', function () { dlg.close(); });
   dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
 })();
+
+// Big "Jetstreamedia" wordmark: rises from behind the photo while the letters decode, left to right
+(function () {
+  var el = document.querySelector('.wordmark');
+  if (!el) return;
+  var text = el.getAttribute('data-text') || el.textContent;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var C = [[139,109,255],[77,141,255],[45,212,232]];
+  function colorAt(t) {
+    var a = t < .5 ? C[0] : C[1], b = t < .5 ? C[1] : C[2], u = t < .5 ? t * 2 : (t - .5) * 2;
+    return 'rgb(' + [0,1,2].map(function (k) { return Math.round(a[k] + (b[k] - a[k]) * u); }).join(',') + ')';
+  }
+  function run() {
+    el.textContent = '';
+    el.classList.add('split');
+    var chars = text.split('');
+    var spans = chars.map(function (ch, i) {
+      var s = document.createElement('span');
+      s.textContent = ch;
+      s.style.color = colorAt(i / (chars.length - 1));
+      el.appendChild(s);
+      return s;
+    });
+    spans.forEach(function (s) { s.style.width = s.getBoundingClientRect().width + 'px'; });
+    if (reduce) return;
+    var POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ#%$&*+=?';
+    var start = performance.now(), delay = 450, stagger = 95, dur = 750;
+    spans.forEach(function (s) { s.style.opacity = 0; });
+    function frame(now) {
+      var done = true;
+      spans.forEach(function (s, i) {
+        var p = (now - start - delay - i * stagger) / dur;
+        if (p < 0) { done = false; return; }
+        if (p < 1) {
+          done = false;
+          s.style.opacity = (0.25 + 0.75 * p).toFixed(2);
+          s.style.filter = 'blur(' + (12 * (1 - p)).toFixed(1) + 'px)';
+          if (Math.random() < 0.55) s.textContent = POOL.charAt(Math.floor(Math.random() * POOL.length));
+        } else {
+          s.textContent = chars[i]; s.style.opacity = 1; s.style.filter = 'none';
+        }
+      });
+      if (!done) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  var ready = (document.fonts && document.fonts.load) ? document.fonts.load('800 60px Unbounded') : Promise.resolve();
+  Promise.race([ready, new Promise(function (r) { setTimeout(r, 1500); })]).then(run, run);
+})();
